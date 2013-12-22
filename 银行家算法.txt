@@ -1,0 +1,233 @@
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+#define FOR(i,a,b) for(int i=a;i<=b;++i)
+#define DWN(i,a,b) for(int i=a;i>=b;--i)
+#define clr(f,z) memset(f,z,sizeof(f))
+
+using namespace std;
+
+const int mm = 2000+9;
+int Available[mm],Request[mm],Work[mm],List[mm];
+int Max[mm][mm],Allocation[mm][mm],Need[mm][mm];
+int n_source,m_process,R_ID;
+bool Finish[mm];
+
+bool check_Error(int Need[mm][mm])
+{
+    FOR(i,0,m_process-1)FOR(j,0,n_source-1)
+    if(Need[i][j]<0)
+        return 1;
+    return 0;
+}
+void get_Need()
+{
+    FOR(i,0,m_process-1)FOR(j,0,n_source-1)
+    Need[i][j] = Max[i][j] - Allocation[i][j];
+}
+void show(int f[][mm])
+{
+    FOR(i,0,m_process-1)FOR(j,0,n_source-1)
+    printf("%d%c",f[i][j],j==n_source-1?'\n':' ');
+}
+bool CanAllocation(int i)
+{
+    FOR(j,0,n_source-1)
+    if(Need[i][j] > Work[j])
+        return 0;
+    return 1;
+}
+bool dfs(int step)
+{
+    if(step == m_process)
+        return 1;
+    FOR(i,0,m_process-1)
+    if(!Finish[i] && CanAllocation(i))
+    {
+        FOR(j,0,n_source-1)
+        Work[j] += Allocation[i][j];
+        List[step] = i;
+        Finish[i] = true;
+        if(dfs(step+1))
+            return 1;
+    }
+    return 0;
+}
+bool check_Safe()
+{
+    FOR(i,0,n_source-1)
+    Work[i] = Available[i];
+
+    clr(Finish,0);
+    if(dfs(0))
+    return 1;
+    return 0;
+}
+void check_Request()
+{
+    FOR(i,0,n_source-1)
+    {
+        Allocation[R_ID][i] += Request[i];
+        Need[R_ID][i] = Max[R_ID][i] - Allocation[R_ID][i];
+        Available[i] -= Request[i];
+    }
+
+    bool can_Request = 1;
+    FOR(i,0,n_source-1)
+    if(Need[R_ID][i]<0 || Available[i] < 0)
+    {
+        printf("请求资源失败!\n");
+        can_Request = 0;
+    }
+
+    if(can_Request)
+    {
+        printf("请求资源成功!");
+        if(check_Safe())
+        {
+            printf("并且系统安全!\n");
+        }
+        else printf("但请求完系统不安全!\n");
+        printf("请输入 1:确认请求 2:取消请求\n");
+        int x;
+        scanf("%d",&x);
+        if(x == 1)
+        {
+            int sum = 0;
+            FOR(i,0,n_source-1)
+            sum += Need[R_ID][i];
+
+            if(sum == 0)
+            {
+               FOR(i,0,n_source-1)
+               {
+                   Available[i] += Allocation[R_ID][i];
+                   Allocation[R_ID][i] = 0;
+               }
+            }
+            printf("已确认\n");
+        }
+        else
+        {
+            FOR(i,0,n_source-1)
+            {
+                Allocation[R_ID][i] -= Request[i];
+                Need[R_ID][i] = Max[R_ID][i] - Allocation[R_ID][i];
+                Available[i] += Request[i];
+            }
+            printf("已取消!\n");
+        }
+    }
+    else
+    {
+        FOR(i,0,n_source-1)
+        {
+            Allocation[R_ID][i] -= Request[i];
+            Need[R_ID][i] = Max[R_ID][i] - Allocation[R_ID][i];
+            Available[i] += Request[i];
+        }
+        printf("已取消!\n");
+    }
+}
+bool input()
+{
+    printf("请输入可利用资源的种类数:\n");
+    while(~scanf("%d",&n_source))
+    {
+        printf("请输入%d资源的资源数目：\n",n_source);
+        FOR(i,0,n_source-1)
+        scanf("%d",&Available[i]);
+
+        printf("请输入进程数目：\n");
+        scanf("%d",&m_process);
+
+        printf("请输入%d X %d的需求矩阵：\n",m_process,n_source);
+        FOR(i,0,m_process-1)FOR(j,0,n_source-1)
+        scanf("%d",&Max[i][j]);
+
+        printf("请输入已经分配的分配矩阵：\n");
+        FOR(i,0,m_process-1)FOR(j,0,n_source-1)
+        scanf("%d",&Allocation[i][j]);
+
+        get_Need();
+        if(check_Error(Need) || check_Error(Max) || check_Error(Allocation))
+        {
+            printf("您输入的资源与资源分配有问题，请重新输入：\n");
+            continue;
+        }
+        return 1;
+    }
+    return 0;
+}
+
+void output()
+{
+    printf("功能选择：1：安全性检查 2：请求资源 3:显示矩阵信息 4:结束\n");
+    int choose;
+    while(~scanf("%d",&choose))
+    {
+        if(choose == 1)
+        {
+            if(check_Safe())
+            {
+                printf("系统处于安全状态，存在安全序列：\n");
+                FOR(i,0,m_process-1)
+                printf(" %d",List[i]);
+                printf("\n");
+            }
+            else printf("系统处于非安全状态\n");
+        }
+        else if(choose == 2)
+        {
+            printf("请输入要请求资源的进程：\n");
+            scanf("%d",&R_ID);
+            printf("请输入资源请求!\n");
+            FOR(i,0,n_source-1)
+            scanf("%d",&Request[i]);
+            check_Request();
+        }
+        else if(choose == 3)
+        {
+            printf("1:Max矩阵 2：Need矩阵 3：Allocation矩阵\n");
+            int x;
+            scanf("%d",&x);
+            if(x == 1)
+                show(Max);
+            else if(x == 2)
+                show(Need);
+            else if(x == 3)
+                show(Allocation);
+            else printf("输入有误!\n");
+        }
+        else if(choose == 4) break;
+        else printf("您输入有误,请重新输入!\n");
+        printf("功能选择：1：安全性检查 2：请求资源 3：显示矩阵信息 4:结束\n");
+    }
+}
+int main()
+{
+    while(input())
+    {
+        output();
+    }
+    return 0;
+}
+
+/**
+3
+2 3 2
+5
+7 5 3
+3 2 2
+9 0 2
+2 2 2
+4 3 3
+
+0 1 0
+2 0 0
+3 0 2
+2 1 1
+0 0 2
+
+
+**/
