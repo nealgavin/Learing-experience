@@ -6,8 +6,11 @@
 1.到官网www.mysql.com下载MySQL安装包：mysql-essential-5.1.52-win32.msi
 2.安装mysql,在安装过程中，一定要选上C Include Files / Lib Files，这样在安装后才会有include和lib文件夹，这些文件夹将在下面的操作用会用到。
 3.把C:\Program Files\MySQL\MySQL Server 5.1\bin下的libmySQL.dll复制并拷贝到C:\WINDOWS\system32下。(这步如果不设置，运行时会报错)。
-4.现在VC++6.0建立一个工程，打开：工具->选择菜单，找到“目录”选项，有一个：“显示目录为”的下拉框，选择include files选项，在其中加入：C:\Program Files\MySQL\MySQL Server 5.0\include\，这样在编译时就可以找到mysql.h文件。
-5.设置步骤3后，只是保证编译通过，但是连接出错。连接时需要用到lib文件，lib文件一般是函数定义编译后的库文件，必须使程序链接时找到这个文件。打开：工具->选择菜单，找到“目录”选项，有一个：“显示目录为”的下拉框，选择Library files选项，在其中加入：C:\Program Files\MySQL\MySQL Server 5.0\lib\opt\，然后在:工程->设置，找到link选项卡，在L 对象/库模块中加入：libmysql.lib。
+4.现在VC++6.0建立一个工程，打开：工具->选择菜单，找到“目录”选项，有一个：“显示目录为”的下拉框，选择include files选项，在其中加入
+：C:\Program Files\MySQL\MySQL Server 5.0\include\，这样在编译时就可以找到mysql.h文件。
+5.设置步骤3后，只是保证编译通过，但是连接出错。连接时需要用到lib文件，lib文件一般是函数定义编译后的库文件，必须使程序链接时找到这个文件。
+打开：工具->选择菜单，找到“目录”选项，有一个：“显示目录为”的下拉框，选择Library files选项，在其中加入：C:\Program Files\MySQL\MySQL Server 5.0\lib\opt
+\，然后在:工程->设置，找到link选项卡，在L 对象/库模块中加入：libmysql.lib。
 6.运行即可。
 下面是一个可以运行的小例子，只要建立win32 console Aplication工程，建一个C文件，把代码复制到C文件中，只要按上述配置就能运行。
 #include <stdio.h>
