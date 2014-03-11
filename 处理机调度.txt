@@ -1,0 +1,227 @@
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <queue>
+#include <cstring>
+#define FOR(i,a,b) for(int i=a;i<=b;++i)
+#define DWN(i,a,b) for(int i=a;i>=b;--i)
+using namespace std;
+const int mm = 1e5+9;
+class PCB
+{
+    public:
+    char name[15];
+    int arrive; //serve of arrive time
+    int t_ser;  // server time
+    int degree;
+    int t_begin;
+    int t_end;
+    double t_got;
+    double t_avegot;
+    bool operator<(const PCB&t)const
+    {
+        return degree<t.degree;
+    }
+}pcb[mm],tcb[mm];
+int num_ser;
+priority_queue<PCB>Q;
+queue<PCB>TQ;
+bool cmp_FCFS(PCB a,PCB b)
+{
+    return a.arrive <= b.arrive;
+}
+bool cmp_SJF(PCB a,PCB b)
+{
+    if(a.t_ser == b.t_ser)
+    return a.arrive <= b.arrive;
+    return a.t_ser <= b.t_ser;
+}
+//bool cmp_degree(PCB a,PCB b)
+//{
+//    if(a.degree != b.degree)
+//    return a.degree > b.degree;
+//    if(a.arrive != b.arrive)
+//    return a.arrive <= b.arrive;
+//    return a.t_ser <= b.t_ser;
+//}
+void out(int x)
+{
+    printf("test\n%s %d %d \n",pcb[x].name,pcb[x].arrive,pcb[x].t_end);
+}
+void OK4()
+{
+    printf("输入时间片大小\n");
+    int xt,pos = 0,ttt = 0,sss = 0,ktt;
+    PCB tx,ty;
+    scanf("%d",&xt);
+    sort(pcb,pcb+num_ser,cmp_FCFS);
+    ttt = max(ttt,pcb[0].arrive);
+    while(1)
+    {
+        ktt = ttt;
+        for(;sss<num_ser;++sss)
+        {
+            if(ttt<pcb[sss].arrive)
+            break;
+            pcb[sss].t_begin = pcb[sss].t_ser;
+            pcb[sss].t_ser -= xt;
+            ttt += xt;
+            if(pcb[sss].t_ser <= 0)
+            {
+                ttt += pcb[sss].t_ser;
+                pcb[sss].t_end = ttt;
+                pcb[sss].t_ser = pcb[sss].t_begin;
+                pcb[pos++] = pcb[sss];
+                continue;
+            }
+//            printf("in %s \n",pcb[sss].name);
+            TQ.push(pcb[sss]);
+        }
+//        printf("ttt=%d\n",ttt);
+        if(!TQ.empty())
+        {
+            tx = TQ.front(); TQ.pop();
+            tx.t_ser -= xt;
+            ttt += xt;
+            //printf("xtt=%d\n",ttt);
+//            printf("kts %s %d %d\n",tx.name,tx.arrive,tx.t_ser);
+            if(tx.t_ser<=0)
+            {
+                ttt += tx.t_ser;
+                tx.t_end = ttt;
+                tx.t_ser =tx.t_begin;
+                pcb[pos++] = tx;
+//                out(pos-1);
+            }
+            else
+            {
+                TQ.push(tx);
+            }
+        }
+        else
+        {
+            ttt = max(ttt,pcb[sss].arrive);
+        }
+        if(sss>=num_ser && TQ.empty())
+        break;
+    }
+}
+void solve(int fun)
+{
+    if(fun == 1)
+    {
+        sort(pcb,pcb+num_ser,cmp_FCFS);
+    }
+    else if(fun == 2)
+    {
+        sort(pcb,pcb+num_ser,cmp_SJF);
+    }
+    else if(fun == 3)
+    {
+        sort(pcb,pcb+num_ser,cmp_FCFS);
+        tcb[0] = pcb[0];
+        tcb[0].t_begin = pcb[0].arrive;
+        tcb[0].t_end = pcb[0].t_begin + pcb[0].t_ser;
+        int ttt = tcb[0].t_end,sss = 1,pos = 1;
+        while(sss<num_ser)
+        {
+            for(;sss<num_ser;++sss)
+            {
+                if(pcb[sss].arrive>ttt)
+                break;
+                Q.push(pcb[sss]);
+            }
+
+            if(!Q.empty())
+            {
+                tcb[pos] = Q.top(); Q.pop();
+                tcb[pos].t_begin = ttt;
+                tcb[pos].t_end = tcb[pos].t_begin + pcb[pos].t_ser;
+                ttt = tcb[pos].t_end;
+                pos ++;
+            }
+            else
+            {
+                tcb[pos] = pcb[sss];
+                tcb[pos].t_begin = max(ttt,tcb[pos].arrive);
+                tcb[pos].t_end = tcb[pos].t_begin + pcb[pos].t_ser;
+                ttt = tcb[pos].t_end;
+                pos ++;
+            }
+        }
+        while(!Q.empty())
+        {
+            tcb[pos] = Q.top(); Q.pop();
+            tcb[pos].t_begin = ttt;
+            tcb[pos].t_end = tcb[pos].t_begin + pcb[pos].t_ser;
+            ttt = tcb[pos].t_end;
+            pos ++;
+        }
+        FOR(i,0,num_ser-1)
+        pcb[i] = tcb[i];
+    }
+    else if(fun == 4)
+    OK4();
+    else printf("errer!\n");
+}
+void output(int fun)
+{
+    if(fun == 1 || fun == 2)
+    {
+        if(fun == 1)
+        printf("fun: FCFS\n");
+        else printf("fun: SJF\n");
+
+        pcb[0].t_begin = pcb[0].arrive;
+        pcb[0].t_end = pcb[0].t_begin + pcb[0].t_ser;
+        FOR(i,1,num_ser-1)
+        {
+            pcb[i].t_begin = max(pcb[i].arrive,pcb[i-1].t_end);
+            pcb[i].t_end = pcb[i].t_begin + pcb[i].t_ser;
+        }
+    }
+    else if(fun == 2)
+    {
+        printf("fun: 高优先权优先算法\n");
+    }
+    FOR(i,0,num_ser-1)
+    {
+        pcb[i].t_got = pcb[i].t_end - pcb[i].arrive;
+        //cout<<"cc -"<<pcb[i].t_got<<endl;
+        pcb[i].t_avegot = pcb[i].t_got/pcb[i].t_ser;
+        printf("task %d: %s %d %d %d %f %f\n",i+1,pcb[i].name,
+               pcb[i].t_ser,pcb[i].t_begin,pcb[i].t_end,pcb[i].t_got,pcb[i].t_avegot);
+    }
+}
+int main()
+{
+    printf("Please enter the number of server!\n");
+    while(~scanf("%d",&num_ser))
+    {
+        printf("Please enter the data:\nserver name,server arrive time");
+        printf("server time,degree\n");
+        FOR(i,0,num_ser-1)
+        {
+            scanf("%s%d%d%d",pcb[i].name,&pcb[i].arrive,
+                  &pcb[i].t_ser,&pcb[i].degree);
+        }
+        printf("please enter the function you choose!\n");
+        printf("1:FCFS 2:SJF 3:高优先权优先 4:时间片轮转\n");
+        int x;
+        scanf("%d",&x);
+        solve(x);
+        output(x);
+    }
+    return 0;
+}
+/****
+时间片
+5
+a 0 4 1
+b 1 3 1
+c 2 5 1
+d 3 2 1
+e 4 4 1
+4
+1
+****/

@@ -1,0 +1,88 @@
+SQL 功能 ：
+DQ 数据查询 select
+DD 数据定义 create drop alter
+DM 数据操作 insert update delete
+DC 数据控制 grant revoke
+show databases; //显示数据库
+use <database>; //进入数据库
+show tables;    //显示列表
+show <table>	//显示表信息
+select * from <table>; //查询信息
+数据定义：
+---------------------------------------------
+定义创建个表
+create table course(
+Cno number(4),
+Cname char(20),
+Cpno number(4)
+);
+主码约束：
+create table course(
+Cno number(4) constraint pk_course<主码别名> primary key,
+Cname char(20)
+);
+create table course(
+Cno number(4),
+Cname char(20),
+Constraint pk_course primary key(Sno)
+);
+外码约束：
+create teable SC(
+    Sno number(12),
+    Cno number(4) Constraint fk_c references Course(Cno),
+    Grade number(3),
+    Constraint pk_SC primary key (Sno,Cno)
+);
+create teable SC(
+Sno number(12),
+Con number(4),
+Grade number(3),
+Constraint pk_SC primary key (Sno,Cno),
+Constraint fk_c foreign key (Cno) references Course(Cno) <表级约束>
+);
+CHECK 约束：
+create table SC(
+    Sno number(12) not null<非空约束>,
+    Cno number(4),
+    Grade number(3) Constraint ck_g check(Grade >=0 AND Grade <= 100),
+    Constraint pk_SC primary key (Sno,Cno),
+    Constraint fk_s foreign key (Sno) references Student(Sno),
+    Constraint fk_c foreign key (Cno) references Course(Cno)
+);
+UNIQUE 约束：
+create table Coures(
+    Cno number(4) constraint pk_Courese primary key,
+    Cname char(20) constraint u_name unique<唯一约束>，
+    Cpno number(4),
+    Credit number(4)
+);
+DEFAULT 约束：
+craete table Student(
+    Sno number(12),
+    Sname char(20),
+    Ssex char(2) default('男'),
+    Sage number(3),
+    Sdept char(10)
+);
+ 表的修改：
+ <向表中加两列>
+ alter table Student ADD(
+     S_entrance date,
+     S_sourse char(20)
+ );
+ 删
+ alter table Student drop(S_entrance,S_sourse);
+ alter table Student modify Ssex char(8) default('女');
+ 
+删除约束：
+alter table SC drop constraint ck_g;
+alter table Student drop unique(Sname);
+索引：
+create unique index Coucname ON Course(Cname);
+create unique index SCno ON SC(Sno ASC,Cno DESC)<升序，降序>
+drop index SCno;删除索引
+-----------------------------------------------------------------------
+数据查询
+-----------------------------------------------------------------------
+
+ 
