@@ -1,0 +1,6 @@
+#!/bin/bash
+#testing
+if date
+then
+	echo "it worked"
+fi
