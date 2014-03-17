@@ -1,0 +1,5 @@
+2014/3/17
+IFS :字段分隔符
+break n 
+continue n n层循环的break continue
+
