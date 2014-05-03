@@ -1,0 +1,5 @@
+#!/bin/bash
+for (( num = 1;num<=6;num++ ))
+do
+	echo "num is $num"
+done

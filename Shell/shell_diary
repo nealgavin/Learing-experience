@@ -2,4 +2,11 @@
 IFS :字段分隔符
 break n 
 continue n n层循环的break continue
+2014/3/17 18:44
+任务：第十三章
+$# 输入参数的个数
+完成
+2014/3/18 8:45
+任务：第十四章 数据呈现
+重定向 exec >3 3>- tee mktemp
 
