@@ -1,0 +1,23 @@
+BEGIN{
+	printf("=========begin count==========\n")
+	pirnt FILENAME
+	dognum = 1
+	goosenum = 2
+	cat = 3
+}
+{
+/*	if($1[2] == "g")*/
+/*		print "yes"*/
+	l
+	if($1 == "dog")
+		dognum = dognum + $2
+	if($1 == "cat")
+		catnum = catnum + $2
+	if($1 == "goose")
+		goosenum = goosenum + $2
+}
+END{
+	printf("dognum : %d\n",dognum)
+	printf("catnum : %d\n",catnum)
+	printf("goose : %d\n",goosenum)
+}

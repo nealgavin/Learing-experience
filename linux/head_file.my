@@ -1,0 +1,5 @@
+#include <fcntl.h>//open()
+#include <sys/types.h>//mode_t
+#include <sys/stst.h>//open()
+#include <unistd.h>//close()
+#include <dirent.h>//目录

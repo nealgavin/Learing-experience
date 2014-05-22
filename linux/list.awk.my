@@ -1,0 +1,13 @@
+BEGIN {
+	printf("=============begin awk =======================\n")
+	print FILENAME
+	printf("=============edn begin =======================\n")
+}
+{
+	for(i=0;i<NR;++i)
+		if(i%6 == 0)
+		printf("%d:%s\n",i,$i)
+}
+END{
+	printf("============end awk===========================\n")
+}

@@ -1,0 +1,12 @@
+2014/3/13
+learing 4.林夕
+
+LINUX 下C编程：第13章 文件操作完成
+......................
+c
+open(文件，路径，权限)
+cteat(路径，umask)
+fstat(文件标识符，struct stat *buf)
+fstat(路径，struct stat *buf)
+stat(路径，struct stat *buf)
+
