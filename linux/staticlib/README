@@ -1,0 +1,15 @@
+/*************************************************************************
+	> File Name: README.c
+	> Author: nealgavin
+	> Mail: nealgavin@126.com 
+	> Created Time: Fri 23 May 2014 08:27:40 PM CST
+ ************************************************************************/
+
+to create static lib ,you should get the *.c to *.o
+then use the command 
+"ar -cru libname.a *.o"
+there is a libname.a to be Created
+
+use the command
+"gcc test.c -L. -lname -o test"
+then a source will be created
