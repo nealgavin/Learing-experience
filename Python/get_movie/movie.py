@@ -3,7 +3,7 @@
  
 import re
 import urllib2
-import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 import string
 from sgmllib import SGMLParser
 import sys
@@ -22,11 +22,12 @@ def gethtml(url):
 def gettags(html):
     global m_type
     soup=BeautifulSoup(html)
-    tags_all = soup.find_all('ul', {'class' : 'clearfix _group','gname':'mi_type'})
+    tags_all = soup.findAll('ul', {'class' : 'clearfix _group','gname':'mi_type'})
  
     re_tags = r'<a _hot=\"tag.sub\" class=\"_gtag _hotkey\" href=\"(.+?)\" title=\"(.+?)\" tvalue=\"(.+?)\">.+?</a>'
     p=re.compile(re_tags,re.DOTALL)
     tags = p.findall(str(tags_all[0]))
+    tags_url = ""
     if tags:
         tags_url = {}
         for tag in tags:
