@@ -1,0 +1,135 @@
+<html><meta charset="utf-8"><body><div id="article_content" class="article_content">
+<p><br />
+</p>
+<p><img src="http://img.blog.csdn.net/20140527150630906?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbmVhbGdhdmlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" /><br />
+</p>
+<p><br />
+</p>
+<p><pre code_snippet_id="365308" snippet_file_name="blog_20140527_1_7098325" name="code" class="html">[gavin@localhost get_movie]$ python get_movie.py
+Input the link of QQ movie
+http://v.qq.com/list/2_-1_-1_-1_1_0_0_20_-1_-1.html
+http://v.qq.com/list/2_-1_-1_-1_1_0_0_20_-1_-1.html
+刀客家族的女人
+http://v.qq.com/cover/3/3x0x6czcrvedphk.html
+生活启示录
+http://v.qq.com/cover/z/zvqk3fww8130zu3.html
+产科男医生
+http://v.qq.com/cover/k/k4tffs6sdczjkur.html
+你们被包围了
+http://v.qq.com/cover/n/nijiw7wrm0ubp0z.html
+Triangle三角
+http://v.qq.com/cover/q/q0c1lhfa4umqbw3.html
+加油爱人
+http://v.qq.com/cover/6/614gfunx9aode39.html
+飞哥大英雄
+http://v.qq.com/cover/o/ozdulcozhtj3hlx.html
+金玉良缘
+http://v.qq.com/cover/e/ej4pj00outhp38n.html
+诛三计
+http://v.qq.com/cover/4/42qmq5prq32tfgb.html
+如果我爱你
+http://v.qq.com/cover/n/no0xky7q8phhkc6.html
+密使2之江都谍影
+http://v.qq.com/cover/7/7aue7d27yearp19.html
+小宝和老财
+http://v.qq.com/cover/w/wlunt0wb380jthm.html
+咱们结婚吧
+http://v.qq.com/cover/b/blf9ksy1ulf6z33.html
+步步惊情
+http://v.qq.com/cover/i/ikibji2k73dqazu.html
+大当家
+http://v.qq.com/cover/7/765s6mwbdbpb3ep.html
+宫锁连城
+http://v.qq.com/cover/n/npzqf0vd4i5nqjh.html
+铁血独立营
+http://v.qq.com/cover/r/r8m1s4yzu1wc1hl.html</pre><pre code_snippet_id="365308" snippet_file_name="blog_20140527_2_8766764" name="code" class="html">我爱男闺蜜
+http://v.qq.com/cover/6/6hbwvj85sic930l.html
+薛丁山
+http://v.qq.com/cover/2/2qq1c1iqph9qpxd.html
+一仆二主
+http://v.qq.com/cover/a/anlxed56zwbpm16.html
+</pre><br />
+<br />
+</p>
+<p>也可建立HTML网页</p>
+<p><br />
+</p>
+<p><img src="http://img.blog.csdn.net/20140527151053812?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbmVhbGdhdmlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" /><br />
+</p>
+<p><br />
+</p>
+<p>上代码：</p>
+<p><pre code_snippet_id="365308" snippet_file_name="blog_20140527_3_2528756" name="code" class="python">#!/usr/bin/env python
+# coding=utf-8
+#########################################
+	#&gt; File Name: get_movie.py
+	#&gt; Author: nealgavin
+	#&gt; Mail: nealgavin@126.com 
+	#&gt; Created Time: Sat 24 May 2014 09:03:58 PM CST
+#########################################
+import re
+import urllib2
+import BeautifulSoup
+import string
+from sgmllib import SGMLParser
+import sys
+
+NUM = 0         #全局 电影数量
+m_type = u&#39;&#39;    #电影类型
+m_site = u&#39;qq&#39;  #电影网站
+
+def gethtml(url):
+    &quot;&quot;&quot;获取网页的代码&quot;&quot;&quot;
+    req = urllib2.Request(url)
+    response = urllib2.urlopen(req)
+    html = response.read()
+    return html
+
+
+def out_Chinese(tags):
+    for tag in tags:
+        print str(tag)
+
+def gettags(html):
+    global m_type
+    #print html
+    soup = BeautifulSoup.BeautifulSoup(html)
+    #print soup
+    tags_all = soup.findAll( &#39;div&#39;,{ &#39;class&#39;:&#39;grid_18&#39; } )
+    re_tags = r&#39;&lt;h6 class=&quot;scores&quot;&gt;(.+?)&lt;/h6&gt;&#39;
+    re.UNICODE
+    p = re.compile(re_tags,re.DOTALL)
+    tags = p.findall(str(tags_all[0]))
+#    print tags_all
+#    print &quot;++&quot;*300
+    return tags
+
+def buildMovieName(url):
+    print &#39;&lt;html&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;head&gt;Tecent Movie&lt;/head&gt;&lt;body&gt;&#39;
+    out_Chinese(gettags(gethtml(url)))
+    print &#39;&lt;/body&gt;&lt;/html&gt;&#39;
+
+def getMovieName(tags):
+    tags = gettags(gethtml(tags))
+    movieNames = []
+    re_rules = r&#39;&lt;a href=&quot;(.+?)&quot; title=&quot;(.+?)&quot; target=&quot;(.*?)&quot;&gt;&#39;
+    match = re.compile(re_rules)
+    for tag in tags:
+        name = match.findall(tag)[0]
+        movieNames.append(name[1])#movie name
+        movieNames.append(name[0])#movie link
+    out_Chinese(movieNames)
+    return movieNames
+#print gethtml(url)
+#buildMovieName(url)
+
+url = raw_input(&quot;Input the link of QQ movie\n&quot;)
+if url is None or len(url) == 0:
+    url = &#39;http://v.qq.com/list/1_-1_-1_-1_2_0_0_20_0_-1_0.html&#39;
+print url
+getMovieName(url)</pre><br />
+<br />
+</p>
+<p><br />
+</p>
+</div></body><html>

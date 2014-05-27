@@ -1,0 +1,194 @@
+<html><meta charset="utf-8"><body><div id="article_content" class="article_content">
+<p></p>
+<h1 style="color:rgb(26,92,200); text-align:center; font-family:'Times New Roman'">
+Best Financing</h1>
+<span style="font-family:'Times New Roman'; font-size:14px"><strong><span style="font-family:Arial; font-size:12px; color:green">Time Limit: 20000/10000 MS (Java/Others)&nbsp;&nbsp;&nbsp;&nbsp;Memory Limit: 32768/32768 K (Java/Others)<br />
+Total Submission(s): 148&nbsp;&nbsp;&nbsp;&nbsp;Accepted Submission(s): 35<br />
+</span></strong></span><br style="font-family:'Times New Roman'; font-size:14px" />
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Problem Description</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+小A想通过合理投资银行理财产品达到收益最大化。已知小A在未来一段时间中的收入情况，描述为两个长度为n的整数数组dates和earnings，表示在第dates[i]天小A收入earnings[i]元（0&lt;=i&lt;n）。银行推出的理财产品均为周期和收益确定的，可描述为长度为m的三个整数数组start、finish和interest_rates, 若购买理财产品i（0&lt;=i&lt;m），需要在第start[i]天投入本金，在第finish[i]天可取回本金和收益，在这期间本金和收益都无法取回，收益为本金*interest_rates[i]/100.0。当天取得的收入或理财产品到期取回的本金当天即可购买理财产品（注意：不考虑复利，即购买理财产品获得的收益不能用于购买后续的理财产品）。假定闲置的钱没有其他收益，如活期收益等，所有收益只能通过购买这些理财产品获得。求小A可以获得的最大收益。<br />
+<br />
+限制条件:<br />
+1&lt;=n&lt;=2500<br />
+1&lt;=m&lt;=2500<br />
+对于任意i（0&lt;=i&lt;n）,1&lt;=dates[i]&lt;=100000,1&lt;=earnings[i]&lt;=100000, dates中无重复元素。<br />
+对于任意i（0&lt;=i&lt;m）,1&lt;=start[i]&lt;finish[i]&lt;=100000, 1&lt;=interest_rates[i]&lt;=100。</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Input</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+第一行为T (T&lt;=200)，表示输入数据组数。<br />
+每组数据&#26684;式如下：<br />
+第一行是n m<br />
+之后连续n行，每行为两个以空&#26684;分隔的整数，依次为date和earning<br />
+之后连续m行，每行为三个以空&#26684;分隔的整数，依次为start, finish和interest_rate</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Output</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+对第i组数据，i从1开始计，输出<br />
+Case #i:<br />
+收益数&#20540;，保留小数点后两位，四舍五入。</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Sample Input</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+<pre style="margin-top:0px; margin-bottom:0px"><div style="font-family:'Courier New',Courier,monospace">2
+1 2
+1 10000
+1 100 5
+50 200 10
+2 2
+1 10000
+5 20000
+1 5 6
+5 9 7</div></pre>
+</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Sample Output</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+<pre style="margin-top:0px; margin-bottom:0px"><div style="font-family:'Courier New',Courier,monospace">Case #1:
+1000.00
+Case #2:
+2700.00</div></pre>
+</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Source</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+<a target="_blank" href="http://acm.hdu.edu.cn/search.php?field=problem&amp;key=2014%C4%EA%B0%D9%B6%C8%D6%AE%D0%C7%B3%CC%D0%F2%C9%E8%BC%C6%B4%F3%C8%FC%20-%20%B3%F5%C8%FC%A3%A8%B5%DA%B6%FE%C2%D6%A3%A9&amp;source=1&amp;searchmode=source" style="color:rgb(26,92,200); text-decoration:none">2014年百度之星程序设计大赛
+ - 初赛（第二轮）</a></div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+<br style="font-family:'Times New Roman'; font-size:14px" />
+<div class="panel_title" align="left" style="height:38px; background-color:transparent; padding:0px 14px; color:rgb(124,169,237); font-size:18px; font-family:Arial; font-weight:bold">
+Recommend</div>
+<div class="panel_content" style="height:auto; margin:0px; padding:0px 20px; font-size:14px; font-family:'Times New Roman'">
+liuyiding&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;We have carefully selected several similar problems for you:&nbsp;&nbsp;<a target="_blank" href="http://acm.hdu.edu.cn/showproblem.php?pid=4831" target="_blank" style="color:rgb(26,92,200); text-decoration:none">4831</a>&nbsp;<a target="_blank" href="http://acm.hdu.edu.cn/showproblem.php?pid=4830" target="_blank" style="color:rgb(26,92,200); text-decoration:none">4830</a>&nbsp;<a target="_blank" href="http://acm.hdu.edu.cn/showproblem.php?pid=4829" target="_blank" style="color:rgb(26,92,200); text-decoration:none">4829</a>&nbsp;<a target="_blank" href="http://acm.hdu.edu.cn/showproblem.php?pid=4828" target="_blank" style="color:rgb(26,92,200); text-decoration:none">4828</a>&nbsp;<a target="_blank" href="http://acm.hdu.edu.cn/showproblem.php?pid=4827" target="_blank" style="color:rgb(26,92,200); text-decoration:none">4827</a>&nbsp;</div>
+<div class="panel_bottom" style="height:auto; margin:0px; font-family:'Times New Roman'; font-size:14px">
+&nbsp;</div>
+思路：
+<p></p>
+<p>将起点终点离散化，之后用起点做DP</p>
+<p><pre name="code" class="html">/*************************************************************************
+	&gt; File Name: hdu-4833-Best-Financing.cpp
+	&gt; Author: nealgavin
+	&gt; Mail: nealgavin@126.com 
+	&gt; Created Time: Mon 26 May 2014 07:28:57 PM CST
+ ************************************************************************/
+
+#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;map&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+const int mm = 5009;
+const int nn = 100003;
+class Income{
+    public:
+    int date;
+    int earning;
+}salry[mm];
+
+class Contral{
+    public:
+    int start;
+    int finish;
+    int interest_rates;
+}earn[mm];
+
+int T,n,m;
+int f[nn],day_in[nn],all_in[nn];
+int dp[mm];
+map&lt;int,int&gt;mp;
+vector&lt;int&gt;vc[2][mm];
+
+int main()
+{
+    while(~scanf(&quot;%d&quot;,&amp;T))
+    {
+        for(int ca=1;ca&lt;=T;++ca)
+        {
+            scanf(&quot;%d %d&quot;,&amp;n,&amp;m);
+            memset(day_in,0,sizeof(day_in));
+            memset(all_in,0,sizeof(all_in));
+            for(int i=0;i&lt;n;++i)
+            {
+                scanf(&quot;%d %d&quot;,&amp;salry[i].date,&amp;salry[i].earning);
+                all_in[ salry[i].date ] += salry[i].earning;
+            }
+            for(int i=1;i&lt;nn;++i)
+                all_in[i] += all_in[i-1];
+            for(int i=0;i&lt;m;++i)
+                scanf(&quot;%d %d %d&quot;,&amp;earn[i].start,&amp;earn[i].finish,&amp;earn[i].interest_rates);
+            for(int i=0;i&lt;m;++i)
+            for(int i=0;i&lt;m;++i)
+            {
+                f[i] = earn[i].start;
+                f[i+m] = earn[i].finish;
+            }
+            sort(f,f+m+m);
+            int pos = unique(f,f+m+m)-f;
+            mp.clear();
+            for(int i=0;i&lt;pos;++i)
+                mp[ f[i] ] = i;
+            day_in[ 0 ] = all_in[ f[0] ];
+            for(int i=1;i&lt;pos;++i)
+                day_in[ i ] = all_in[ f[i] ] - all_in[ f[i-1] ];
+
+            for(int i=0;i&lt;2;++i)
+            for(int j=0;j&lt;pos;++j)
+                 vc[i][j].clear();
+            
+            for(int i=0;i&lt;m;++i)
+            {
+                earn[i].start = mp[ earn[i].start ];
+                earn[i].finish = mp[ earn[i].finish ];
+                vc[0][ earn[i].start ].push_back(earn[i].finish);
+                vc[1][ earn[i].start ].push_back(earn[i].interest_rates);
+            }
+            memset(dp,0,sizeof(dp));
+            for(int i=pos-1;i&gt;=0;--i)
+            { 
+                dp[i] = dp[i+1];
+                int sz = vc[0][i].size();
+                for(int j=0;j&lt;sz;++j)
+                {
+                    dp[i] = max(dp[i],dp[ vc[0][i][j] ]+vc[1][i][j]);
+//                    cerr&lt;&lt;&quot;in&quot;&lt;&lt;i&lt;&lt;&quot; &quot;&lt;&lt;dp[i]&lt;&lt;&quot; &quot;&lt;&lt;vc[0][i][j]&lt;&lt;&quot; &quot;&lt;&lt;vc[1][i][j]&lt;&lt;endl;
+                }
+            }
+            long long ans = 0;
+            for(int i=0;i&lt;pos;++i)
+                ans += (long long)dp[i]*day_in[i];
+            printf(&quot;Case #%d:\n&quot;,ca);
+            printf(&quot;%.2f\n&quot;,(double)ans/100);
+        }
+    }
+    return 0;
+}</pre><br />
+<br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+<p><br />
+</p>
+</div></body><html>
