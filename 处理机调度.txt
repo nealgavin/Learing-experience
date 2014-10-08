@@ -44,6 +44,7 @@ bool cmp_SJF(PCB a,PCB b)
 //    return a.arrive <= b.arrive;
 //    return a.t_ser <= b.t_ser;
 //}
+//change
 void out(int x)
 {
     printf("test\n%s %d %d \n",pcb[x].name,pcb[x].arrive,pcb[x].t_end);
